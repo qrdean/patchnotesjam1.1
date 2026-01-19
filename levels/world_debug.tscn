@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://bf4ivh4fctgc2"]
+
+[ext_resource type="PackedScene" uid="uid://vy6qwocc03eq" path="res://objects/player/player.tscn" id="1_888v7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_888v7"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_hyj88"]
+sky_material = SubResource("ProceduralSkyMaterial_888v7")
+
+[sub_resource type="Environment" id="Environment_o2qx7"]
+background_mode = 2
+sky = SubResource("Sky_hyj88")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyj88"]
+albedo_color = Color(0.2159017, 0.21590173, 0.2159017, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u5tx7"]
+material = SubResource("StandardMaterial3D_hyj88")
+size = Vector3(100, 0.2, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_888v7"]
+data = PackedVector3Array(-50, 0.1, -50, -50, -0.1, -50, 50, -0.1, -50, -50, 0.1, 50, -50, -0.1, 50, -50, -0.1, -50, -50, -0.1, 50, 50, -0.1, 50, -50, -0.1, -50, -50, 0.1, -50, -50, 0.1, 50, -50, -0.1, -50, -50, 0.1, 50, -50, 0.1, -50, 50, 0.1, -50, -50, 0.1, 50, 50, 0.1, 50, -50, -0.1, 50, 50, -0.1, 50, 50, -0.1, -50, -50, -0.1, -50, 50, 0.1, -50, 50, -0.1, -50, 50, -0.1, 50, 50, 0.1, 50, 50, -0.1, 50, -50, -0.1, 50, 50, 0.1, -50, -50, 0.1, -50, 50, -0.1, -50, 50, 0.1, 50, -50, 0.1, 50, 50, 0.1, -50, 50, 0.1, 50, 50, 0.1, -50, 50, -0.1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_888v7"]
+albedo_color = Color(0.029506557, 0.029506557, 0.029506557, 1)
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_o2qx7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_u5tx7")
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_888v7")
+
+[node name="Player" parent="." instance=ExtResource("1_888v7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7534057, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3275309, -12.848331)
+material = SubResource("StandardMaterial3D_888v7")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.755112, 2.3275309, -12.848331)
+material = SubResource("StandardMaterial3D_888v7")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.755112, 2.3275309, -7.11924)
+material = SubResource("StandardMaterial3D_888v7")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.755112, 2.3275309, 6.798416)
+material = SubResource("StandardMaterial3D_888v7")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5269594, 2.3275309, 14.317495)
+material = SubResource("StandardMaterial3D_888v7")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.3672905, 2.3275309, 14.317495)
+material = SubResource("StandardMaterial3D_888v7")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.3672905, 2.3275309, -1.3076878)
+material = SubResource("StandardMaterial3D_888v7")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.3672905, 2.3275309, -13.632614)
+material = SubResource("StandardMaterial3D_888v7")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.755112, 2.3275309, 14.317495)
+material = SubResource("StandardMaterial3D_888v7")
