@@ -8,10 +8,15 @@ extends CharacterBody3D
 @export var acceleration := 0.1
 @export var deceleration := 0.25
 
+@export var cross_hair_texture: TextureRect
+@export var interact_cast_distance: float
+
 @export var camera: Camera3D
 
-const BASE_SPEED = 6.0
-const JUMP_VELOCITY = 4.5
+var interact_cast_result
+
+const BASE_SPEED = 8.0
+const JUMP_VELOCITY = 5.5
 
 
 func _physics_process(delta: float) -> void:
@@ -62,3 +67,23 @@ func handle_input_event_mouse_motion(event: InputEventMouseMotion) -> void:
 	camera.rotation.x -= event.screen_relative.y / 1000 * sensitivity
 	camera.rotation.x = clamp(camera.rotation.x, minPitch, maxPitch)
 	rotation.y = fmod(rotation.y, PI * 2)
+
+func interact_cast() -> void:
+	var space_state := camera.get_world_3d().direct_space_state
+	var cross_hair_center = cross_hair_texture.position + Vector2(16, 16)
+	var origin := camera.project_ray_origin(cross_hair_center)
+	var end = origin + camera.project_ray_normal(cross_hair_center) * interact_cast_distance
+	var query := PhysicsRayQueryParameters3D.create(origin, end)
+	query.collide_with_bodies = true
+	query.collide_with_areas = true
+	var result := space_state.intersect_ray(query)
+	var current_cast_result = result.get("collider")
+	if !is_instance_valid(interact_cast_result):
+		interact_cast_result = null
+	if current_cast_result != interact_cast_result:
+		if interact_cast_result and interact_cast_result.has_user_signal(InteractionComponent.UNFOCUSED_SIGNAL):
+			interact_cast_result.emit_signal(InteractionComponent.UNFOCUSED_SIGNAL)
+		interact_cast_result = current_cast_result
+		if interact_cast_result and interact_cast_result.has_user_signal(InteractionComponent.FOCUSED_SIGNAL):
+			interact_cast_result.emit_signal(InteractionComponent.FOCUSED_SIGNAL)
+
