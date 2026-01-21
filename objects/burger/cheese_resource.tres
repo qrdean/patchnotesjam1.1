@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="IngredientResource" load_steps=4 format=3 uid="uid://bfm8bk2cbwnlb"]
+
+[ext_resource type="Script" uid="uid://b0fotevuik835" path="res://objects/ingredient_resource.gd" id="1_yawg7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yawg7"]
+albedo_color = Color(0.7959169, 0.83889043, 1.1551381e-06, 1)
+emission_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_yawg7"]
+material = SubResource("StandardMaterial3D_yawg7")
+size = Vector3(1, 0.1, 1)
+
+[resource]
+script = ExtResource("1_yawg7")
+name = "cheese"
+mesh = SubResource("BoxMesh_yawg7")
+metadata/_custom_type_script = "uid://b0fotevuik835"

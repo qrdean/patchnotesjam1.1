@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://bfe5hihitof8f"]
+
+[ext_resource type="Script" uid="uid://bxd61poo2y122" path="res://objects/burger/burger_pickup.gd" id="1_cnslt"]
+[ext_resource type="PackedScene" uid="uid://de4bk38c28ve0" path="res://assets/bun.blend" id="1_xw78c"]
+[ext_resource type="Resource" uid="uid://6xqb4jhq7cq4" path="res://objects/burger/burger_recipe_resource.tres" id="2_c7bsb"]
+[ext_resource type="PackedScene" uid="uid://sqcw5tbcyb5f" path="res://assets/cheese.blend" id="2_sqlxe"]
+[ext_resource type="PackedScene" uid="uid://isvhdngqwutr" path="res://assets/meat.blend" id="3_us6oi"]
+[ext_resource type="Material" uid="uid://cnhacxcweucrv" path="res://assets/cooked_meat_material.tres" id="4_60hf0"]
+[ext_resource type="Script" uid="uid://20dg327onw3r" path="res://components/interaction_component.gd" id="4_k41fw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_60hf0"]
+
+[node name="BurgerPickup" type="Area3D" node_paths=PackedStringArray("bun_top_visual", "cheese_visual", "meat_visual", "bun_bottom_visual")]
+script = ExtResource("1_cnslt")
+bun_top_visual = NodePath("BurgerVisuals/bun2")
+cheese_visual = NodePath("BurgerVisuals/cheese")
+meat_visual = NodePath("BurgerVisuals/meat")
+bun_bottom_visual = NodePath("BurgerVisuals/bun")
+burger_recipe = ExtResource("2_c7bsb")
+
+[node name="BurgerVisuals" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2885592, 0)
+
+[node name="bun" parent="BurgerVisuals" instance=ExtResource("1_xw78c")]
+
+[node name="Sphere" parent="BurgerVisuals/bun" index="0"]
+transform = Transform3D(0.4, 0, 0, 0, -0.226, 3.4969112e-08, 0, -1.9757547e-08, -0.4, 0, 0.22943881, 0)
+
+[node name="cheese" parent="BurgerVisuals" instance=ExtResource("2_sqlxe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35595727, 0)
+
+[node name="meat" parent="BurgerVisuals" instance=ExtResource("3_us6oi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29522425, 0)
+
+[node name="Cylinder" parent="BurgerVisuals/meat" index="0"]
+transform = Transform3D(0.4, 0, 0, 0, 0.037, 0, 0, 0, 0.4, 0, 0, 0)
+surface_material_override/0 = ExtResource("4_60hf0")
+
+[node name="bun2" parent="BurgerVisuals" instance=ExtResource("1_xw78c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4123869, 0)
+
+[node name="Sphere" parent="BurgerVisuals/bun2" index="0"]
+transform = Transform3D(0.4, 0, 0, 0, 0.226, 0, 0, 0, 0.4, 0, 0.0016676784, 0)
+
+[node name="InteractionComponent" type="Node" parent="."]
+script = ExtResource("4_k41fw")
+context = "Pickup Burger"
+metadata/_custom_type_script = "uid://20dg327onw3r"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_60hf0")
+
+[editable path="BurgerVisuals/bun"]
+[editable path="BurgerVisuals/meat"]
+[editable path="BurgerVisuals/bun2"]

@@ -7,17 +7,26 @@ extends CharacterBody3D
 
 @export var acceleration := 0.1
 @export var deceleration := 0.25
+@export var BASE_SPEED := 8.0
 
 @export var cross_hair_texture: TextureRect
-@export var interact_cast_distance: float
+@export var interact_cast_distance: float = 20.0
 
 @export var camera: Camera3D
+@export var food_spawn: Marker3D
+@export var food_projectile_speed: float = 10.0
+@export var plate_projectile_speed: float = 15.0
+@export var item_marker_pos: Marker3D
+@export var automator: Automator
 
 var interact_cast_result
 
-const BASE_SPEED = 8.0
-const JUMP_VELOCITY = 5.5
+var current_held_item
 
+const JUMP_VELOCITY = 15.5
+
+var food_projectile := preload("res://objects/food_projectile.tscn")
+const PLATE_PROJECTILE = preload("uid://3iqsalnwljki")
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -27,6 +36,11 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+
+	interact()
+	drop()
+	throw_food()
+	throw_plate()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -40,6 +54,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, deceleration)
 
 	move_and_slide()
+	interact_cast()
 
 func _input(event) -> void:
 	if event.is_action_pressed("p"):
@@ -87,3 +102,28 @@ func interact_cast() -> void:
 		if interact_cast_result and interact_cast_result.has_user_signal(InteractionComponent.FOCUSED_SIGNAL):
 			interact_cast_result.emit_signal(InteractionComponent.FOCUSED_SIGNAL)
 
+func interact() -> void:
+	if Input.is_action_just_pressed("interact"):
+		if interact_cast_result and interact_cast_result.has_user_signal(InteractionComponent.INTERACTED_SIGNAL):
+			interact_cast_result.emit_signal(InteractionComponent.INTERACTED_SIGNAL, self)
+
+func drop() -> void:
+	if Input.is_action_just_pressed("drop"):
+		if current_held_item != null and current_held_item.has_method("drop"):
+			current_held_item.drop()
+
+func throw_food() -> void:
+	if Input.is_action_just_pressed("throw"):
+		var new_food_proj = food_projectile.instantiate()
+		get_tree().root.add_child(new_food_proj)
+		new_food_proj.global_position = food_spawn.global_position
+		new_food_proj.dir = Vector3(0, -1, 0)
+		new_food_proj.linear_velocity = -food_spawn.global_transform.basis.z * food_projectile_speed
+
+func throw_plate() -> void:
+	if Input.is_action_just_pressed("throw_plate"):
+		var new_food_proj = PLATE_PROJECTILE.instantiate()
+		get_tree().root.add_child(new_food_proj)
+		new_food_proj.global_position = food_spawn.global_position
+		new_food_proj.dir = Vector3(0, -1, 0)
+		new_food_proj.linear_velocity = -food_spawn.global_transform.basis.z * plate_projectile_speed

@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://wyq5ith8w87o"]
+
+[ext_resource type="Script" uid="uid://dwa5ts4w6hwq0" path="res://objects/ingredient_node.gd" id="1_pgj1u"]
+[ext_resource type="Resource" uid="uid://bfm8bk2cbwnlb" path="res://objects/burger/cheese_resource.tres" id="2_6lnp1"]
+[ext_resource type="Script" uid="uid://20dg327onw3r" path="res://components/interaction_component.gd" id="2_c0w74"]
+[ext_resource type="PackedScene" uid="uid://sqcw5tbcyb5f" path="res://assets/cheese.blend" id="3_6lnp1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bmbxf"]
+
+[node name="Cheese" type="Area3D"]
+script = ExtResource("1_pgj1u")
+ingredient = ExtResource("2_6lnp1")
+metadata/_custom_type_script = "uid://dwa5ts4w6hwq0"
+
+[node name="cheese" parent="." instance=ExtResource("3_6lnp1")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_bmbxf")
+
+[node name="InteractionComponent" type="Node" parent="."]
+script = ExtResource("2_c0w74")
+context = "Pickup Cheese"
+metadata/_custom_type_script = "uid://20dg327onw3r"

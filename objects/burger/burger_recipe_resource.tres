@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RecipeResource" load_steps=6 format=3 uid="uid://6xqb4jhq7cq4"]
+
+[ext_resource type="Script" uid="uid://b0fotevuik835" path="res://objects/ingredient_resource.gd" id="1_ld410"]
+[ext_resource type="Script" uid="uid://c7e2lawn5swik" path="res://objects/recipe_resource.gd" id="2_jx1xj"]
+[ext_resource type="Resource" uid="uid://bfm8bk2cbwnlb" path="res://objects/burger/cheese_resource.tres" id="2_xo7de"]
+[ext_resource type="Resource" uid="uid://csrvkt0biwoih" path="res://objects/burger/meat_resource.tres" id="3_xo7de"]
+[ext_resource type="Resource" uid="uid://k0vkunijve6b" path="res://objects/burger/bun_resource.tres" id="4_hx70t"]
+
+[resource]
+script = ExtResource("2_jx1xj")
+ingredients = Array[ExtResource("1_ld410")]([ExtResource("2_xo7de"), ExtResource("3_xo7de"), ExtResource("4_hx70t")])
+metadata/_custom_type_script = "uid://c7e2lawn5swik"

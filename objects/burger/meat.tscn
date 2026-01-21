@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://tgilafvy7bi0"]
+
+[ext_resource type="Script" uid="uid://bmcamo0142arq" path="res://objects/burger/meat.gd" id="1_aefs4"]
+[ext_resource type="PackedScene" uid="uid://isvhdngqwutr" path="res://assets/meat.blend" id="1_mupo4"]
+[ext_resource type="Material" uid="uid://b8ksorddccfvk" path="res://assets/uncooked_meat_material.tres" id="3_1bg6w"]
+[ext_resource type="Script" uid="uid://20dg327onw3r" path="res://components/interaction_component.gd" id="3_kq8qy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aefs4"]
+
+[node name="meat" type="Area3D" node_paths=PackedStringArray("mesh", "collision")]
+script = ExtResource("1_aefs4")
+mesh = NodePath("meat/Cylinder")
+collision = NodePath("CollisionShape3D")
+
+[node name="meat" parent="." instance=ExtResource("1_mupo4")]
+
+[node name="Cylinder" parent="meat" index="0"]
+transform = Transform3D(0.4, 0, 0, 0, 0.037, 0, 0, 0, 0.4, 0, 0, 0)
+surface_material_override/0 = ExtResource("3_1bg6w")
+
+[node name="InteractionComponent" type="Node" parent="."]
+script = ExtResource("3_kq8qy")
+context = "pickup meat"
+metadata/_custom_type_script = "uid://20dg327onw3r"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_aefs4")
+
+[connection signal="player_interacted" from="InteractionComponent" to="." method="_on_interaction_component_player_interacted"]
+
+[editable path="meat"]

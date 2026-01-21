@@ -1,12 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://vy6qwocc03eq"]
+[gd_scene load_steps=8 format=3 uid="uid://vy6qwocc03eq"]
 
 [ext_resource type="Script" uid="uid://cualmoat06v7a" path="res://objects/player/player.gd" id="1_cqmt1"]
+[ext_resource type="Script" uid="uid://b82be0oj2j2vs" path="res://components/context_component.gd" id="2_g7ett"]
+[ext_resource type="Texture2D" uid="uid://vb61nj07hogd" path="res://icon.svg" id="3_ssrue"]
+[ext_resource type="Texture2D" uid="uid://dpmenj5wskow4" path="res://assets/crosshairs.png" id="4_jnjyq"]
+[ext_resource type="Script" uid="uid://dw54pmc70ax6x" path="res://objects/player/automator.gd" id="5_gnkmh"]
+[ext_resource type="Script" uid="uid://cxawyqofovu5c" path="res://objects/player/debug_info.gd" id="5_xkryw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5lq1w"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cross_hair_texture", "camera", "food_spawn", "item_marker_pos", "automator")]
+collision_layer = 2
 script = ExtResource("1_cqmt1")
+BASE_SPEED = 10.0
+cross_hair_texture = NodePath("UIManager/CenterContainer/CrosshairTexture")
 camera = NodePath("Node3D/Camera3D")
+food_spawn = NodePath("Node3D/Camera3D/Marker3D")
+food_projectile_speed = 15.0
+item_marker_pos = NodePath("Node3D/Camera3D/Marker3D2")
+automator = NodePath("Automator")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_5lq1w")
@@ -15,3 +27,79 @@ shape = SubResource("CapsuleShape3D_5lq1w")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3591562, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Node3D"]
+
+[node name="Marker3D" type="Marker3D" parent="Node3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.734624)
+
+[node name="Marker3D2" type="Marker3D" parent="Node3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2646414, 0, -0.7420559)
+
+[node name="UIManager" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContextComponent" type="CenterContainer" parent="UIManager" node_paths=PackedStringArray("icon", "context")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 45.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_g7ett")
+icon = NodePath("TextureRect")
+context = NodePath("Label")
+metadata/_custom_type_script = "uid://b82be0oj2j2vs"
+
+[node name="TextureRect" type="TextureRect" parent="UIManager/ContextComponent"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_ssrue")
+
+[node name="Label" type="Label" parent="UIManager/ContextComponent"]
+layout_mode = 2
+text = "HEY"
+
+[node name="CenterContainer" type="CenterContainer" parent="UIManager"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CrosshairTexture" type="TextureRect" parent="UIManager/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("4_jnjyq")
+
+[node name="DebugInfo" type="Control" parent="UIManager" node_paths=PackedStringArray("debug_label", "debug_label_2")]
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 60.0
+script = ExtResource("5_xkryw")
+debug_label = NodePath("VBoxContainer/DebugLabel")
+debug_label_2 = NodePath("VBoxContainer/Label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIManager/DebugInfo"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DebugLabel" type="Label" parent="UIManager/DebugInfo/VBoxContainer"]
+layout_mode = 2
+text = "hello world and things"
+
+[node name="Label" type="Label" parent="UIManager/DebugInfo/VBoxContainer"]
+layout_mode = 2
+text = "fhello worldj"
+
+[node name="Automator" type="Node" parent="."]
+script = ExtResource("5_gnkmh")
+metadata/_custom_type_script = "uid://dw54pmc70ax6x"

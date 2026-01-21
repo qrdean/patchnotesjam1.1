@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddc8bxpiqyudl"]
+
+[ext_resource type="Script" uid="uid://dw54pmc70ax6x" path="res://objects/player/automator.gd" id="1_xs1p1"]
+
+[node name="Automator" type="Node"]
+script = ExtResource("1_xs1p1")

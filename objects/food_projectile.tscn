@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://n3yof6hqxqpg"]
+
+[ext_resource type="Script" uid="uid://clnw5dkjb57cw" path="res://objects/food_projectile.gd" id="1_c62ti"]
+[ext_resource type="Script" uid="uid://dnx7qb0a558ip" path="res://objects/food_area_collider.gd" id="2_kgpxy"]
+[ext_resource type="PackedScene" uid="uid://kox4dm1wl7jb" path="res://assets/test_cube.glb" id="2_vt4e6"]
+[ext_resource type="PackedScene" uid="uid://de4bk38c28ve0" path="res://assets/bun.blend" id="4_1krj6"]
+[ext_resource type="PackedScene" uid="uid://sqcw5tbcyb5f" path="res://assets/cheese.blend" id="5_xjd0l"]
+[ext_resource type="PackedScene" uid="uid://isvhdngqwutr" path="res://assets/meat.blend" id="6_7te06"]
+[ext_resource type="Material" uid="uid://cnhacxcweucrv" path="res://assets/cooked_meat_material.tres" id="7_0b3xj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gk8r8"]
+radius = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c62ti"]
+
+[node name="FoodProjectile" type="RigidBody3D" node_paths=PackedStringArray("model")]
+collision_layer = 4
+lock_rotation = true
+script = ExtResource("1_c62ti")
+food_type = 2
+rotation_speed = 7.0
+model = NodePath("BurgerVisuals")
+
+[node name="test_cube" parent="." instance=ExtResource("2_vt4e6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+visible = false
+
+[node name="Cube" parent="test_cube" index="0"]
+transform = Transform3D(0.111, 0, 0, 0, 0.111, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="BurgerVisuals" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.028684497, -0.33023897, 0)
+
+[node name="bun" parent="BurgerVisuals" instance=ExtResource("4_1krj6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38766658, 0)
+
+[node name="Sphere" parent="BurgerVisuals/bun" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, -0.113, 3.019916e-08, 0, -1.7062526e-08, -0.2, 0, 0, 0)
+
+[node name="cheese" parent="BurgerVisuals" instance=ExtResource("5_xjd0l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4547397, 0)
+
+[node name="Cube" parent="BurgerVisuals/cheese" index="0"]
+transform = Transform3D(0.155, 0, 0, 0, 0.01, 0, 0, 0, 0.155, 0, 0, 0)
+
+[node name="meat" parent="BurgerVisuals" instance=ExtResource("6_7te06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42701605, 0)
+
+[node name="Cylinder" parent="BurgerVisuals/meat" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, 0.019, 0, 0, 0, 0.2, 0, 0, 0)
+surface_material_override/0 = ExtResource("7_0b3xj")
+
+[node name="bun2" parent="BurgerVisuals" instance=ExtResource("4_1krj6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48559862, 0)
+
+[node name="Sphere" parent="BurgerVisuals/bun2" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, 0.113, 0, 0, 0, 0.2, 0, 0.0016676784, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_gk8r8")
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("projectile")]
+collision_layer = 32
+script = ExtResource("2_kgpxy")
+projectile = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_c62ti")
+
+[editable path="test_cube"]
+[editable path="BurgerVisuals/bun"]
+[editable path="BurgerVisuals/cheese"]
+[editable path="BurgerVisuals/meat"]
+[editable path="BurgerVisuals/bun2"]

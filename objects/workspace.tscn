@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkdu5ttvbrl0y"]
+
+[ext_resource type="Script" uid="uid://b8akkgje3fxri" path="res://objects/workspace.gd" id="1_ov5kg"]
+[ext_resource type="Script" uid="uid://20dg327onw3r" path="res://components/interaction_component.gd" id="2_4xekx"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8i2f2"]
+data = PackedVector3Array(-1, -0.75, 0.5, -1, -0.75, -0.5, -1, 0.75, -0.5, 1, -0.75, -0.5, -1, -0.75, -0.5, -1, -0.75, 0.5, -1, 0.75, -0.5, -1, -0.75, -0.5, 1, -0.75, -0.5, -1, 0.75, -0.5, -1, 0.75, 0.5, -1, -0.75, 0.5, -1, -0.75, 0.5, -1, 0.75, 0.5, 1, 0.75, 0.5, 1, 0.75, 0.5, -1, 0.75, 0.5, -1, 0.75, -0.5, -1, -0.75, 0.5, 1, -0.75, 0.5, 1, -0.75, -0.5, 1, 0.75, 0.5, 1, -0.75, 0.5, -1, -0.75, 0.5, 1, -0.75, -0.5, 1, -0.75, 0.5, 1, 0.75, 0.5, 1, -0.75, -0.5, 1, 0.75, -0.5, -1, 0.75, -0.5, -1, 0.75, -0.5, 1, 0.75, -0.5, 1, 0.75, 0.5, 1, 0.75, 0.5, 1, 0.75, -0.5, 1, -0.75, -0.5)
+
+[node name="Workspace" type="StaticBody3D"]
+script = ExtResource("1_ov5kg")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(2, 1.5, 1)
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_8i2f2")
+
+[node name="InteractionComponent" type="Node" parent="."]
+script = ExtResource("2_4xekx")
+context = "Set Items"
+metadata/_custom_type_script = "uid://20dg327onw3r"
