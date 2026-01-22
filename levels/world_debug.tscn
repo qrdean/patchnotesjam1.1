@@ -44,8 +44,9 @@ data = PackedVector3Array(-1, -5, 1, -1, -5, -1, -1, 5, -1, 1, -5, -1, -1, -5, -
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_vswn4"]
 data = PackedVector3Array(-5, -0.5, 12.5, -5, -0.5, -12.5, -5, 0.5, -12.5, 5, -0.5, -12.5, -5, -0.5, -12.5, -5, -0.5, 12.5, -5, 0.5, -12.5, -5, -0.5, -12.5, 5, -0.5, -12.5, -5, 0.5, -12.5, -5, 0.5, 12.5, -5, -0.5, 12.5, -5, -0.5, 12.5, -5, 0.5, 12.5, 5, 0.5, 12.5, 5, 0.5, 12.5, -5, 0.5, 12.5, -5, 0.5, -12.5, -5, -0.5, 12.5, 5, -0.5, 12.5, 5, -0.5, -12.5, 5, 0.5, 12.5, 5, -0.5, 12.5, -5, -0.5, 12.5, 5, -0.5, -12.5, 5, -0.5, 12.5, 5, 0.5, 12.5, 5, -0.5, -12.5, 5, 0.5, -12.5, -5, 0.5, -12.5, -5, 0.5, -12.5, 5, 0.5, -12.5, 5, 0.5, 12.5, 5, 0.5, 12.5, 5, 0.5, -12.5, 5, -0.5, -12.5)
 
-[node name="World" type="Node3D"]
+[node name="World" type="Node3D" node_paths=PackedStringArray("time_label")]
 script = ExtResource("1_ar253")
+time_label = NodePath("Control/Label")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_o2qx7")
@@ -163,3 +164,20 @@ light_color = Color(0.9905171, 0.70682544, 0.60013777, 1)
 light_energy = 0.19
 light_bake_mode = 1
 sky_mode = 1
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Hey"

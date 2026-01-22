@@ -18,7 +18,6 @@ func _process(delta: float) -> void:
 	GameManager.update_burger_count(current_burgers, current_uncooked_burgers)
 	clean_plate(delta)
 	make_burger(delta)
-	# _simulation_dirty(delta)
 
 
 func clean_plate(delta: float) -> void:

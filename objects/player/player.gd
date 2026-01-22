@@ -6,7 +6,7 @@ extends CharacterBody3D
 @export var maxPitch: float = deg_to_rad(60)
 
 @export var acceleration := 0.1
-@export var deceleration := 0.25
+@export var deceleration := .25
 @export var BASE_SPEED := 8.0
 
 @export var cross_hair_texture: TextureRect
@@ -23,10 +23,19 @@ var interact_cast_result
 
 var current_held_item
 
-const JUMP_VELOCITY = 15.5
+const JUMP_VELOCITY = 5.5
 
 var food_projectile := preload("res://objects/food_projectile.tscn")
 const PLATE_PROJECTILE = preload("uid://3iqsalnwljki")
+var sliding := false
+var wall_jumping_time := 0.
+var is_wall_jumping = false
+
+func _process(delta: float) -> void:
+	if wall_jumping_time > 0.:
+		wall_jumping_time -= delta
+	else:
+		is_wall_jumping = false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -37,24 +46,52 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
+	if Input.is_action_pressed("crouch") and is_on_floor() and (velocity.x > 0 || velocity.z > 0):
+		sliding = true
+	else:
+		sliding = false
+
 	interact()
 	drop()
 	throw_food()
 	throw_plate()
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("left", "right", "forward", "back")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = lerp(velocity.x, direction.x * BASE_SPEED, acceleration)
-		velocity.z = lerp(velocity.z, direction.z * BASE_SPEED, acceleration)
-	else:
-		velocity.x = move_toward(velocity.x, 0, deceleration)
-		velocity.z = move_toward(velocity.z, 0, deceleration)
+	if !sliding:
+		var input_dir := Input.get_vector("left", "right", "forward", "back")
+		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
+		if not is_on_floor() and is_on_wall():
+			handle_wall_jump(direction)
+
+		if !is_wall_jumping:
+			if direction:
+				velocity.x = lerp(velocity.x, direction.x * BASE_SPEED, acceleration)
+				velocity.z = lerp(velocity.z, direction.z * BASE_SPEED, acceleration)
+			else:
+				velocity.x = move_toward(velocity.x, 0, deceleration)
+				velocity.z = move_toward(velocity.z, 0, deceleration)
 
 	move_and_slide()
 	interact_cast()
+
+
+func handle_wall_jump(direction: Vector3) -> void:
+	var query := PhysicsRayQueryParameters3D.create(global_position, direction)
+	query.collide_with_bodies = true
+	var space_state := get_world_3d().direct_space_state
+	var result = space_state.intersect_ray(query)
+	if result:
+		var collide_position: Vector3 = result.get("position")
+		var wall_pos := position - collide_position
+		if Input.is_action_just_pressed("ui_accept"):
+			var new_vec := direction.normalized().reflect(wall_pos.normalized())
+			new_vec = new_vec.project(Vector3.UP).normalized()
+			new_vec = (new_vec + wall_pos.normalized() * 0.35).normalized()
+			var vert := Vector3(-new_vec.normalized().x, 1., -new_vec.normalized().z)
+			velocity = vert * velocity.length() * 1.5
+			velocity.y = clampf(velocity.y, 0., 10.)
+			is_wall_jumping = true
+			wall_jumping_time = 0.30
 
 func _input(event) -> void:
 	if event.is_action_pressed("p"):
@@ -82,6 +119,7 @@ func handle_input_event_mouse_motion(event: InputEventMouseMotion) -> void:
 	camera.rotation.x -= event.screen_relative.y / 1000 * sensitivity
 	camera.rotation.x = clamp(camera.rotation.x, minPitch, maxPitch)
 	rotation.y = fmod(rotation.y, PI * 2)
+
 
 func interact_cast() -> void:
 	var space_state := camera.get_world_3d().direct_space_state

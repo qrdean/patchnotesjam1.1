@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://vy6qwocc03eq"]
+[gd_scene load_steps=9 format=3 uid="uid://vy6qwocc03eq"]
 
 [ext_resource type="Script" uid="uid://cualmoat06v7a" path="res://objects/player/player.gd" id="1_cqmt1"]
 [ext_resource type="Script" uid="uid://b82be0oj2j2vs" path="res://components/context_component.gd" id="2_g7ett"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://cxawyqofovu5c" path="res://objects/player/debug_info.gd" id="5_xkryw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5lq1w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xkryw"]
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cross_hair_texture", "camera", "food_spawn", "item_marker_pos", "automator")]
 collision_layer = 2
@@ -103,3 +105,10 @@ text = "fhello worldj"
 [node name="Automator" type="Node" parent="."]
 script = ExtResource("5_gnkmh")
 metadata/_custom_type_script = "uid://dw54pmc70ax6x"
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 256
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_xkryw")

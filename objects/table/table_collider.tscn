@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://u73b17rmio5p"]
+[gd_scene load_steps=7 format=3 uid="uid://u73b17rmio5p"]
 
 [ext_resource type="Script" uid="uid://dhjrsdfokylc" path="res://objects/table/table_collider.gd" id="1_ib5aw"]
 [ext_resource type="PackedScene" uid="uid://dx0tteemevx16" path="res://objects/plate/plate_pickup.tscn" id="2_r38lf"]
+[ext_resource type="Script" uid="uid://1qgsggpl7s1u" path="res://objects/table/label_3d.gd" id="3_40xvn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dvof5"]
 size = Vector3(1, 1.1864014, 1)
@@ -12,12 +13,13 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r38lf"]
 albedo_color = Color(0.41082254, 0.17256463, 0, 1)
 
-[node name="TableCollider" type="Area3D" node_paths=PackedStringArray("food_marker", "plate_pickup")]
+[node name="TableCollider" type="Area3D" node_paths=PackedStringArray("food_marker", "plate_pickup", "debug_label")]
 collision_layer = 16
 collision_mask = 96
 script = ExtResource("1_ib5aw")
 food_marker = NodePath("Marker3D")
 plate_pickup = NodePath("PlatePickup")
+debug_label = NodePath("Label3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09320068, 0)
@@ -38,6 +40,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6103512, 0)
 [node name="PlatePickup" parent="." instance=ExtResource("2_r38lf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5869117, 0)
 visible = false
+collision_layer = 128
+collision_mask = 256
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3443952, 0)
+billboard = 1
+text = "Hello World"
+script = ExtResource("3_40xvn")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="PlatePickup" to="PlatePickup" method="_on_area_entered"]
 [connection signal="plate_picked_up" from="PlatePickup" to="." method="_on_plate_pickup_plate_picked_up"]
