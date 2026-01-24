@@ -2,6 +2,7 @@ class_name TableCollider
 extends Area3D
 
 signal customer_leave_upset(TableCollider)
+signal customer_eaten(TableCollider)
 
 @export var food_marker: Marker3D
 @export var eating_timer := 5.0
@@ -10,7 +11,7 @@ signal customer_leave_upset(TableCollider)
 
 @export var debug_label: Label3D
 
-var currently_occupied := false
+@export var currently_occupied := false
 
 var plate = null
 var food = null
@@ -29,6 +30,7 @@ func _process(delta: float) -> void:
 			if is_instance_valid(plate):
 				plate.queue_free()
 			eating = false
+			customer_eaten.emit(self)
 			eating_timer = 5.0
 			waiting_time = 10.
 			currently_occupied = false

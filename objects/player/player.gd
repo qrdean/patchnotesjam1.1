@@ -7,7 +7,7 @@ extends CharacterBody3D
 
 @export var acceleration := 0.1
 @export var deceleration := .25
-@export var BASE_SPEED := 8.0
+@export var BASE_SPEED := 9.0
 
 @export var cross_hair_texture: TextureRect
 @export var interact_cast_distance: float = 20.0
@@ -18,6 +18,9 @@ extends CharacterBody3D
 @export var plate_projectile_speed: float = 15.0
 @export var item_marker_pos: Marker3D
 @export var automator: Automator
+
+@export var camera_position_offset := Vector3(0, -1, 0) 
+var camera_original_position: Vector3
 
 var interact_cast_result
 
@@ -30,6 +33,9 @@ const PLATE_PROJECTILE = preload("uid://3iqsalnwljki")
 var sliding := false
 var wall_jumping_time := 0.
 var is_wall_jumping = false
+
+func _ready() -> void:
+	camera_original_position = camera.position
 
 func _process(delta: float) -> void:
 	if wall_jumping_time > 0.:
@@ -46,10 +52,16 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	if Input.is_action_pressed("crouch") and is_on_floor() and (velocity.x > 0 || velocity.z > 0):
+	if Input.is_action_pressed("crouch") and is_on_floor() and (abs(velocity.x) > 0 || abs(velocity.z) > 0):
 		sliding = true
+		camera.position = lerp(camera.position, camera_original_position + camera_position_offset, 0.3)
 	else:
 		sliding = false
+		camera.position = lerp(camera.position, camera_original_position, 0.3)
+
+	if Input.is_action_pressed("crouch") and not is_on_floor():
+		# fall
+		velocity += get_gravity() * 5.5 * delta
 
 	interact()
 	drop()

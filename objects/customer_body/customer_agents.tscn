@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://x0y5hj3ms0oh"]
+
+[ext_resource type="Script" uid="uid://ccyrecgdienij" path="res://objects/customer_body/customer_agents.gd" id="1_jhpqa"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o8n5h"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o8n5h"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jhpqa"]
+radius = 0.7
+
+[node name="CustomerAgents" type="CharacterBody3D" node_paths=PackedStringArray("navigation_agent")]
+motion_mode = 1
+script = ExtResource("1_jhpqa")
+navigation_agent = NodePath("NavigationAgent3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_o8n5h")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_o8n5h")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_height_offset = -1.0
+
+[node name="TableDetection" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TableDetection"]
+shape = SubResource("CapsuleShape3D_jhpqa")
+
+[connection signal="area_entered" from="TableDetection" to="." method="_on_table_detection_area_entered"]
