@@ -28,6 +28,10 @@ window/size/mode=2
 window/size/initial_position_type=4
 window/stretch/mode="canvas_items"
 
+[editor]
+
+movie_writer/movie_file="/home/qdean/projects/patch-notes-jam-1.1/movies/movie.avi"
+
 [input]
 
 forward={
@@ -93,6 +97,7 @@ crouch={
 3d_physics/layer_7="PlateProj"
 3d_physics/layer_8="PlatePickup"
 3d_physics/layer_9="PlayerPlatePickup"
+3d_physics/layer_10="PlateProj2"
 
 [physics]
 

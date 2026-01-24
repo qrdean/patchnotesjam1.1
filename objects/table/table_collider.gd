@@ -52,6 +52,7 @@ func _on_area_entered(area: Area3D) -> void:
 					area.projectile.queue_free()
 					return
 				food  = area.projectile
+				area.set_collision_mask_value(10, false)
 				set_collision_mask_value(6, false)
 
 		area.projectile.global_position = food_marker.global_position

@@ -7,6 +7,7 @@ extends Area3D
 
 @export var burger_recipe: RecipeResource
 
+
 var can_pickup := false
 
 var has_ingredient_list: Dictionary [String, bool] = {}
@@ -14,7 +15,7 @@ var has_ingredient_list: Dictionary [String, bool] = {}
 func _ready() -> void:
 	for i in burger_recipe.ingredients:
 		has_ingredient_list[i.name] = false
-
+		
 func place_ingredient(ingredient: IngredientResource) -> void:
 	if burger_recipe.has_ingredient(ingredient):
 		has_ingredient_list[ingredient.name] = true

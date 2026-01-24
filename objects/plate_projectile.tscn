@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://3iqsalnwljki"]
+[gd_scene load_steps=7 format=3 uid="uid://3iqsalnwljki"]
 
 [ext_resource type="Script" uid="uid://clnw5dkjb57cw" path="res://objects/food_projectile.gd" id="1_umh3l"]
 [ext_resource type="Script" uid="uid://dnx7qb0a558ip" path="res://objects/food_area_collider.gd" id="2_5qx0j"]
+[ext_resource type="Script" uid="uid://bqsc28hl5qxku" path="res://objects/plate/plate_grabber.gd" id="3_jc60w"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5qx0j"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_umh3l"]
+radius = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jc60w"]
 radius = 1.0
 
 [node name="PlateProjectile" type="RigidBody3D" node_paths=PackedStringArray("model")]
@@ -29,3 +33,11 @@ projectile = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_umh3l")
+
+[node name="Area3D2" type="Area3D" parent="."]
+collision_layer = 512
+script = ExtResource("3_jc60w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+shape = SubResource("SphereShape3D_jc60w")
+debug_fill = false
