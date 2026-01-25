@@ -3,6 +3,7 @@ extends Area3D
 
 signal customer_leave_upset(TableCollider)
 signal customer_eaten(TableCollider)
+signal customer_eating()
 
 @export var food_marker: Marker3D
 @export var eating_timer := 5.0
@@ -20,6 +21,7 @@ var eating := false
 func _process(delta: float) -> void:
 	debug_label.set_debug_text(currently_occupied, eating, waiting_time, eating_timer)
 	if plate and food and not eating:
+		customer_eating.emit()
 		eating = true
 
 	if eating:
