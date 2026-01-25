@@ -43,7 +43,6 @@ func set_movement_target(target_position: Vector3) -> void:
 	navigation_agent.set_target_position(target_position)
 
 func _process(_delta: float) -> void:
-	print_debug(anim_state)
 	match anim_state:
 		ANIM_STATE.EATING:
 			if animation_player.current_animation != EAT_ANIMATION:
@@ -78,8 +77,8 @@ func _physics_process(delta: float):
 
 func _on_table_detection_area_entered(area: Area3D) -> void:
 	if area is TableCollider and area == current_table:
-		print_debug("at the table")
 		table_detection.set_collision_mask_value(5, false)
+		area.currently_occupied = true
 		area.customer_leave_upset.connect(_leave)
 		area.customer_eaten.connect(_eaten)
 		area.customer_eating.connect(_eating)

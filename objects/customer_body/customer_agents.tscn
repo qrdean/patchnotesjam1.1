@@ -169,12 +169,13 @@ _data = {
 [node name="CustomerAgents" type="CharacterBody3D" node_paths=PackedStringArray("navigation_agent", "table_detection", "animation_player")]
 motion_mode = 1
 script = ExtResource("1_jhpqa")
+speed = 8.0
 navigation_agent = NodePath("NavigationAgent3D")
 table_detection = NodePath("TableDetection")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="customer" parent="." instance=ExtResource("2_3gp2y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7781367, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0028019, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false

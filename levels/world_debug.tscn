@@ -208,6 +208,12 @@ script = ExtResource("4_7be66")
 
 [node name="CustomerAgents2" parent="CustomerHold" instance=ExtResource("4_ar253")]
 
+[node name="CustomerAgents3" parent="CustomerHold" instance=ExtResource("4_ar253")]
+
+[node name="CustomerAgents4" parent="CustomerHold" instance=ExtResource("4_ar253")]
+
+[node name="CustomerAgents5" parent="CustomerHold" instance=ExtResource("4_ar253")]
+
 [node name="SecondFloorSpawner" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.489197, 12.231549, 12.827341)
 

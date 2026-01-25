@@ -80,6 +80,7 @@ func handle_waiting_time(delta: float) -> void:
 	if currently_occupied and not eating:
 		if waiting_time <= 0:
 			customer_leave_upset.emit(self)
+			print_debug("updset")
 			currently_occupied = false
 			waiting_time = 10.
 		else:
