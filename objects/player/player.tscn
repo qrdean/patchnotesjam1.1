@@ -80,20 +80,25 @@ grow_vertical = 2
 layout_mode = 2
 texture = ExtResource("4_jnjyq")
 
-[node name="DebugInfo" type="Control" parent="UIManager" node_paths=PackedStringArray("debug_label", "debug_label_2")]
-anchors_preset = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 60.0
-offset_bottom = 60.0
+[node name="DebugInfo" type="Control" parent="UIManager" node_paths=PackedStringArray("debug_label", "debug_label_2", "point_label", "VboxContainer2")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("5_xkryw")
 debug_label = NodePath("VBoxContainer/DebugLabel")
 debug_label_2 = NodePath("VBoxContainer/Label")
+point_label = NodePath("VBoxContainer2/Label")
+VboxContainer2 = NodePath("VBoxContainer2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UIManager/DebugInfo"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 192.0
+offset_bottom = 70.0
 
 [node name="DebugLabel" type="Label" parent="UIManager/DebugInfo/VBoxContainer"]
 layout_mode = 2
@@ -102,6 +107,22 @@ text = "hello world and things"
 [node name="Label" type="Label" parent="UIManager/DebugInfo/VBoxContainer"]
 layout_mode = 2
 text = "fhello worldj"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UIManager/DebugInfo"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -99.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 60.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="UIManager/DebugInfo/VBoxContainer2"]
+layout_mode = 2
+text = "Hey There We"
+horizontal_alignment = 2
 
 [node name="Automator" type="Node" parent="."]
 script = ExtResource("5_gnkmh")

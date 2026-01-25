@@ -36,6 +36,7 @@ var is_wall_jumping = false
 
 func _ready() -> void:
 	camera_original_position = camera.position
+	GameManager.debug_info.set_point_label(PointSystem.get_point_text())
 
 func _process(delta: float) -> void:
 	if wall_jumping_time > 0.:
@@ -169,6 +170,7 @@ func throw_food() -> void:
 		new_food_proj.global_position = food_spawn.global_position
 		new_food_proj.dir = Vector3(0, -1, 0)
 		new_food_proj.linear_velocity = -food_spawn.global_transform.basis.z * food_projectile_speed
+		new_food_proj.point_system_at_time_of_throw = get_player_state_to_points()
 
 func throw_plate() -> void:
 	if Input.is_action_just_pressed("throw_plate"):
@@ -177,3 +179,13 @@ func throw_plate() -> void:
 		new_food_proj.global_position = food_spawn.global_position
 		new_food_proj.dir = Vector3(0, -1, 0)
 		new_food_proj.linear_velocity = -food_spawn.global_transform.basis.z * plate_projectile_speed
+
+
+func get_player_state_to_points() -> PointSystem.PointMultipliers:
+	if sliding:
+		return PointSystem.PointMultipliers.Sliding 
+	if is_wall_jumping or is_on_wall():
+		return PointSystem.PointMultipliers.OnWall
+	if not is_on_floor():
+		return PointSystem.PointMultipliers.InAir
+	return PointSystem.PointMultipliers.Default

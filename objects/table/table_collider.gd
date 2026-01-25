@@ -27,6 +27,14 @@ func _process(delta: float) -> void:
 	if eating:
 		eating_timer -= delta
 		if eating_timer <= 0:
+			PointSystem.add_point(PointSystem.PointMultipliers.BurgerDelivered)
+			GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(PointSystem.PointMultipliers.BurgerDelivered))
+			if food.point_system_at_time_of_throw != PointSystem.PointMultipliers.Default:
+				PointSystem.add_point(food.point_system_at_time_of_throw)
+				GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(food.point_system_at_time_of_throw))
+			if food.is_on_plate:
+				PointSystem.add_point(PointSystem.PointMultipliers.OnPlate)
+				GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(PointSystem.PointMultipliers.OnPlate))
 			if is_instance_valid(food):
 				food.queue_free()
 			if is_instance_valid(plate):
@@ -80,7 +88,8 @@ func handle_waiting_time(delta: float) -> void:
 	if currently_occupied and not eating:
 		if waiting_time <= 0:
 			customer_leave_upset.emit(self)
-			print_debug("updset")
+			PointSystem.add_point(PointSystem.PointMultipliers.CustomerLeave)
+			GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(PointSystem.PointMultipliers.CustomerLeave))
 			currently_occupied = false
 			waiting_time = 10.
 		else:

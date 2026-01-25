@@ -9,6 +9,7 @@ extends Node3D
 
 var tables: Array[TableCollider] = []
 var customer_trigger_time := 5.
+var total_customers_to_server := 30.
 
 var no_more := false
 
@@ -21,18 +22,20 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	time_label.text = "Time Till Next Customer " + str("%0.2f" % customer_trigger_time, "s")
 
-	if customer_pool_node.customer_pool.size() > 0:
+	if customer_pool_node.customer_pool.size() > 0 and total_customers_to_server > 0:
 		if customer_trigger_time <= 0:
 			if tables[0].get_table_empty():
 				var table := tables.pop_front() as TableCollider
 				if table.global_position.y > 10:
 					var customer_agent: CustomerAgent = customer_pool_node.move_from_customer_pool_to_active()
+					total_customers_to_server -= 1
 					customer_agent.global_position = second_floor_marker.global_position
 					customer_agent.current_table = table
 					customer_agent.exit_position = second_floor_marker.global_position
 					customer_agent.set_movement_target(table.global_position)
 				else:
 					var customer_agent: CustomerAgent = customer_pool_node.move_from_customer_pool_to_active()
+					total_customers_to_server -= 1
 					customer_agent.global_position = first_floor_marker.global_position
 					customer_agent.current_table = table
 					customer_agent.exit_position = first_floor_marker.global_position

@@ -16,6 +16,8 @@ enum FoodType {
 var dir := Vector3.ZERO
 var dead := false
 var impulsed_applied := false
+var point_system_at_time_of_throw := PointSystem.PointMultipliers.Default
+var is_on_plate := false
 
 func _ready() -> void:
 	pass
@@ -62,3 +64,4 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 		#linear_velocity = Vector3.ZERO
 		global_position = plate.global_position
 		linear_velocity = plate.linear_velocity
+		is_on_plate = true
