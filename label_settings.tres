@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cw53bn6vaddyu"]
+
+[ext_resource type="FontFile" uid="uid://pi6yixnxwj0l" path="res://assets/fonts/WeirdComic-Regular.ttf" id="1_8aso4"]
+
+[resource]
+font = ExtResource("1_8aso4")
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)

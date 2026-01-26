@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="AudioLib" load_steps=15 format=3 uid="uid://cm2muor4awokq"]
+
+[ext_resource type="AudioStream" uid="uid://bighfa86s5wo5" path="res://assets/audio/sfx/jump.wav" id="1_e3rbi"]
+[ext_resource type="Script" uid="uid://d0e6hgjfgop4c" path="res://resources/audio_lib.gd" id="1_gdd4n"]
+[ext_resource type="AudioStream" uid="uid://bn0g2h01kf1uv" path="res://assets/audio/sfx/bell_enter.wav" id="1_yeioq"]
+[ext_resource type="Script" uid="uid://c3p7dwtetpnic" path="res://resources/audio_struct.gd" id="2_yeioq"]
+[ext_resource type="AudioStream" uid="uid://ct1sywv5o0b7r" path="res://assets/audio/sfx/eat.mp3" id="3_5o7st"]
+[ext_resource type="AudioStream" uid="uid://dammpt0c7an8n" path="res://assets/audio/sfx/audio_select.mp3" id="5_2kkox"]
+[ext_resource type="AudioStream" uid="uid://dg3pxd2h3mguy" path="res://assets/audio/sfx/slide_2.mp3" id="5_xe55m"]
+[ext_resource type="AudioStream" uid="uid://kgibeqh1fdu7" path="res://assets/audio/sfx/swipe.wav" id="8_i5r6h"]
+
+[sub_resource type="Resource" id="Resource_5o7st"]
+script = ExtResource("2_yeioq")
+audio = ExtResource("1_yeioq")
+volume_db = -2.0
+metadata/_custom_type_script = "uid://c3p7dwtetpnic"
+
+[sub_resource type="Resource" id="Resource_i5r6h"]
+script = ExtResource("2_yeioq")
+audio = ExtResource("3_5o7st")
+metadata/_custom_type_script = "uid://c3p7dwtetpnic"
+
+[sub_resource type="Resource" id="Resource_xe55m"]
+script = ExtResource("2_yeioq")
+audio = ExtResource("1_e3rbi")
+volume_db = -2.0
+metadata/_custom_type_script = "uid://c3p7dwtetpnic"
+
+[sub_resource type="Resource" id="Resource_g8oi6"]
+script = ExtResource("2_yeioq")
+audio = ExtResource("5_2kkox")
+metadata/_custom_type_script = "uid://c3p7dwtetpnic"
+
+[sub_resource type="Resource" id="Resource_2kkox"]
+script = ExtResource("2_yeioq")
+audio = ExtResource("5_xe55m")
+metadata/_custom_type_script = "uid://c3p7dwtetpnic"
+
+[sub_resource type="Resource" id="Resource_qva4i"]
+script = ExtResource("2_yeioq")
+audio = ExtResource("8_i5r6h")
+metadata/_custom_type_script = "uid://c3p7dwtetpnic"
+
+[resource]
+script = ExtResource("1_gdd4n")
+player_jump = SubResource("Resource_xe55m")
+bell_enter = SubResource("Resource_5o7st")
+slide = SubResource("Resource_2kkox")
+eating = SubResource("Resource_i5r6h")
+score_fx = SubResource("Resource_g8oi6")
+throw_fx = SubResource("Resource_qva4i")
+metadata/_custom_type_script = "uid://d0e6hgjfgop4c"

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://u6mkgak3uskl"]
+
+[ext_resource type="Script" uid="uid://dlm72ixfuqinv" path="res://resources/sfx/audio_2d.gd" id="1_ofg56"]
+
+[node name="Audio2d" type="Node3D" node_paths=PackedStringArray("audio")]
+script = ExtResource("1_ofg56")
+audio = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

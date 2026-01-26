@@ -7,8 +7,8 @@ Need SFX
 - Customer Upset
 - Cook Burger Start
 - Cook Burger Done
-- Dishes Pickup
-- Dishes Cleanup
+- Dishes Pickup - tiney_gear_small_mech
+- Dishes Cleanup - steampunk_machine_mech
 - Jumping
 - Sliding
 - Slamming

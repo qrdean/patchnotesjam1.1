@@ -19,6 +19,8 @@ extends CharacterBody3D
 @export var item_marker_pos: Marker3D
 @export var automator: Automator
 
+@export var sliding_fx: AudioStreamPlayer
+
 @export var camera_position_offset := Vector3(0, -1, 0) 
 var camera_original_position: Vector3
 
@@ -30,6 +32,9 @@ const JUMP_VELOCITY = 5.5
 
 var food_projectile := preload("res://objects/food_projectile.tscn")
 const PLATE_PROJECTILE = preload("uid://3iqsalnwljki")
+const audio_2d = preload("uid://u6mkgak3uskl")
+const audio_lib := preload("res://resources/sfx/audio_lib.tres")
+
 var sliding := false
 var wall_jumping_time := 0.
 var is_wall_jumping = false
@@ -51,13 +56,16 @@ func _physics_process(delta: float) -> void:
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		play_jump()
 		velocity.y = JUMP_VELOCITY
 
 	if Input.is_action_pressed("crouch") and is_on_floor() and (abs(velocity.x) > 0 || abs(velocity.z) > 0):
+		play_sliding()
 		sliding = true
 		camera.position = lerp(camera.position, camera_original_position + camera_position_offset, 0.3)
 	else:
 		sliding = false
+		stop_sliding()
 		camera.position = lerp(camera.position, camera_original_position, 0.3)
 
 	if Input.is_action_pressed("crouch") and not is_on_floor():
@@ -171,6 +179,7 @@ func throw_food() -> void:
 		new_food_proj.dir = Vector3(0, -1, 0)
 		new_food_proj.linear_velocity = -food_spawn.global_transform.basis.z * food_projectile_speed
 		new_food_proj.point_system_at_time_of_throw = get_player_state_to_points()
+		play_throw_fx()
 
 func throw_plate() -> void:
 	if Input.is_action_just_pressed("throw_plate"):
@@ -189,3 +198,21 @@ func get_player_state_to_points() -> PointSystem.PointMultipliers:
 	if not is_on_floor():
 		return PointSystem.PointMultipliers.InAir
 	return PointSystem.PointMultipliers.Default
+
+func play_jump() -> void:
+	var jump_fx = audio_2d.instantiate()
+	add_child(jump_fx)
+	jump_fx.PlayInstance(audio_lib.player_jump, 0.42)
+
+func play_sliding() -> void:
+	if not sliding_fx.playing:
+		sliding_fx.play()
+
+func stop_sliding() -> void:
+	if sliding_fx.playing:
+		sliding_fx.stop()
+
+func play_throw_fx() -> void:
+	var throw_fx := audio_2d.instantiate()
+	add_child(throw_fx)
+	throw_fx.PlayInstance(audio_lib.throw_fx)

@@ -1,36 +1,22 @@
-[gd_resource type="Resource" script_class="MusicLib" load_steps=11 format=3 uid="uid://w5p8sk5y7pul"]
+[gd_resource type="Resource" script_class="MusicLib" load_steps=7 format=3 uid="uid://w5p8sk5y7pul"]
 
+[ext_resource type="AudioStream" uid="uid://cwfeo571kgbyx" path="res://assets/audio/music/Breakdown_2.ogg" id="1_48l14"]
 [ext_resource type="Script" uid="uid://doh7ynubv6oxs" path="res://resources/music_struct.gd" id="1_iavfj"]
-[ext_resource type="AudioStream" uid="uid://ds1a3l2gasty3" path="res://assets/audio/music/Breakdown.ogg" id="1_iwiky"]
-[ext_resource type="AudioStream" uid="uid://biskrf1itnawt" path="res://assets/audio/music/StartLoop1.ogg" id="3_cewu6"]
 [ext_resource type="AudioStream" uid="uid://cqmsvufppls06" path="res://assets/audio/music/Outro.ogg" id="4_qipn8"]
-[ext_resource type="AudioStream" uid="uid://ewj2gpsifxdu" path="res://assets/audio/music/StartLoop2.ogg" id="5_kqmje"]
 [ext_resource type="Script" uid="uid://dhtwvpejlxjjf" path="res://resources/music_lib.gd" id="6_7alej"]
-
-[sub_resource type="Resource" id="Resource_1dfbx"]
-script = ExtResource("1_iavfj")
-audio = ExtResource("1_iwiky")
-metadata/_custom_type_script = "uid://doh7ynubv6oxs"
 
 [sub_resource type="Resource" id="Resource_kx3ux"]
 script = ExtResource("1_iavfj")
-audio = ExtResource("3_cewu6")
+audio = ExtResource("1_48l14")
 metadata/_custom_type_script = "uid://doh7ynubv6oxs"
 
-[sub_resource type="Resource" id="Resource_ns0xa"]
+[sub_resource type="Resource" id="Resource_ru7iq"]
 script = ExtResource("1_iavfj")
 audio = ExtResource("4_qipn8")
-metadata/_custom_type_script = "uid://doh7ynubv6oxs"
-
-[sub_resource type="Resource" id="Resource_wfjch"]
-script = ExtResource("1_iavfj")
-audio = ExtResource("5_kqmje")
 metadata/_custom_type_script = "uid://doh7ynubv6oxs"
 
 [resource]
 script = ExtResource("6_7alej")
 full_main_loop = SubResource("Resource_kx3ux")
-part_main_loop = SubResource("Resource_wfjch")
-breakdown_loop = SubResource("Resource_1dfbx")
-outro_loop = SubResource("Resource_ns0xa")
+outro_loop = SubResource("Resource_ru7iq")
 metadata/_custom_type_script = "uid://dhtwvpejlxjjf"

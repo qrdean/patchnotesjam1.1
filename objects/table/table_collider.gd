@@ -9,6 +9,7 @@ signal customer_eating()
 @export var eating_timer := 5.0
 @export var plate_pickup: PlatePickup
 @export var waiting_time := 10.0
+@export var customer_seat: Marker3D
 
 @export var debug_label: Label3D
 
@@ -17,6 +18,9 @@ signal customer_eating()
 var plate = null
 var food = null
 var eating := false
+
+const audio_2d := preload("res://resources/sfx/Audio2d.tscn")
+const audio_lib := preload("res://resources/sfx/audio_lib.tres")
 
 func _process(delta: float) -> void:
 	debug_label.set_debug_text(currently_occupied, eating, waiting_time, eating_timer)
@@ -28,13 +32,16 @@ func _process(delta: float) -> void:
 		eating_timer -= delta
 		if eating_timer <= 0:
 			PointSystem.add_point(PointSystem.PointMultipliers.BurgerDelivered)
+			PointSystem.customers_served += 1
+			play_score_sound()
 			GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(PointSystem.PointMultipliers.BurgerDelivered))
-			if food.point_system_at_time_of_throw != PointSystem.PointMultipliers.Default:
-				PointSystem.add_point(food.point_system_at_time_of_throw)
-				GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(food.point_system_at_time_of_throw))
-			if food.is_on_plate:
-				PointSystem.add_point(PointSystem.PointMultipliers.OnPlate)
-				GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(PointSystem.PointMultipliers.OnPlate))
+			if is_instance_valid(food):
+				if food.point_system_at_time_of_throw != PointSystem.PointMultipliers.Default:
+					PointSystem.add_point(food.point_system_at_time_of_throw)
+					GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(food.point_system_at_time_of_throw))
+				if food.is_on_plate:
+					PointSystem.add_point(PointSystem.PointMultipliers.OnPlate)
+					GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(PointSystem.PointMultipliers.OnPlate))
 			if is_instance_valid(food):
 				food.queue_free()
 			if is_instance_valid(plate):
@@ -89,6 +96,7 @@ func handle_waiting_time(delta: float) -> void:
 		if waiting_time <= 0:
 			customer_leave_upset.emit(self)
 			PointSystem.add_point(PointSystem.PointMultipliers.CustomerLeave)
+			PointSystem.customers_left += 1
 			GameManager.debug_info.add_point_label_string(PointSystem.get_point_label(PointSystem.PointMultipliers.CustomerLeave))
 			currently_occupied = false
 			waiting_time = 10.
@@ -97,3 +105,8 @@ func handle_waiting_time(delta: float) -> void:
 
 func get_table_empty() -> bool:
 	return not currently_occupied and not plate_pickup.visible
+
+func play_score_sound() -> void:
+	var score_fx := audio_2d.instantiate()
+	add_child(score_fx)
+	score_fx.PlayInstance(audio_lib.score_fx)

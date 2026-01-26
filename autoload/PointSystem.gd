@@ -2,6 +2,8 @@ extends Node
 
 var point_total: int = 0 
 var current_multiplier: float = 1.
+var customers_served: int = 0
+var customers_left: int = 0
 
 enum PointMultipliers {
 	BurgerDelivered,
@@ -59,3 +61,9 @@ func get_point_label(multiplier_type: PointMultipliers) -> String:
 		return_text += " +"
 	return_text += str(calculated_points)
 	return return_text
+
+func reset() -> void:
+	point_total = 0
+	customers_left = 0
+	customers_served = 0
+	current_multiplier = 1.

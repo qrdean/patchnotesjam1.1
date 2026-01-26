@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://1qgsggpl7s1u" path="res://objects/table/label_3d.gd" id="3_40xvn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dvof5"]
-size = Vector3(1, 1.1864014, 1)
+size = Vector3(1.2286377, 1.1864014, 1.3465576)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ib5aw"]
 albedo_color = Color(0, 0, 0, 1)
@@ -13,16 +13,17 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r38lf"]
 albedo_color = Color(0.41082254, 0.17256463, 0, 1)
 
-[node name="TableCollider" type="Area3D" node_paths=PackedStringArray("food_marker", "plate_pickup", "debug_label")]
+[node name="TableCollider" type="Area3D" node_paths=PackedStringArray("food_marker", "plate_pickup", "customer_seat", "debug_label")]
 collision_layer = 16
 collision_mask = 96
 script = ExtResource("1_ib5aw")
 food_marker = NodePath("Marker3D")
 plate_pickup = NodePath("PlatePickup")
+customer_seat = NodePath("CustomerSeta")
 debug_label = NodePath("Label3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09320068, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0044555664, 0.09320068, 0.00579834)
 shape = SubResource("BoxShape3D_dvof5")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
@@ -48,6 +49,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3443952, 0)
 billboard = 1
 text = "Hello World"
 script = ExtResource("3_40xvn")
+
+[node name="CustomerSeta" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.94134927)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_entered" from="PlatePickup" to="PlatePickup" method="_on_area_entered"]

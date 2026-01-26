@@ -1,17 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://vy6qwocc03eq"]
+[gd_scene load_steps=11 format=3 uid="uid://vy6qwocc03eq"]
 
 [ext_resource type="Script" uid="uid://cualmoat06v7a" path="res://objects/player/player.gd" id="1_cqmt1"]
 [ext_resource type="Script" uid="uid://b82be0oj2j2vs" path="res://components/context_component.gd" id="2_g7ett"]
 [ext_resource type="Texture2D" uid="uid://vb61nj07hogd" path="res://icon.svg" id="3_ssrue"]
 [ext_resource type="Texture2D" uid="uid://dpmenj5wskow4" path="res://assets/crosshairs.png" id="4_jnjyq"]
+[ext_resource type="LabelSettings" uid="uid://cw53bn6vaddyu" path="res://label_settings.tres" id="4_m4kly"]
 [ext_resource type="Script" uid="uid://dw54pmc70ax6x" path="res://objects/player/automator.gd" id="5_gnkmh"]
 [ext_resource type="Script" uid="uid://cxawyqofovu5c" path="res://objects/player/debug_info.gd" id="5_xkryw"]
+[ext_resource type="AudioStream" uid="uid://dg3pxd2h3mguy" path="res://assets/audio/sfx/slide_2.mp3" id="7_ow0dq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5lq1w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xkryw"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cross_hair_texture", "camera", "food_spawn", "item_marker_pos", "automator")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("cross_hair_texture", "camera", "food_spawn", "item_marker_pos", "automator", "sliding_fx")]
 collision_layer = 2
 script = ExtResource("1_cqmt1")
 BASE_SPEED = 10.0
@@ -22,6 +24,7 @@ food_projectile_speed = 15.0
 plate_projectile_speed = 30.0
 item_marker_pos = NodePath("Node3D/Camera3D/Marker3D2")
 automator = NodePath("Automator")
+sliding_fx = NodePath("AudioStreamPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_5lq1w")
@@ -67,6 +70,7 @@ texture = ExtResource("3_ssrue")
 [node name="Label" type="Label" parent="UIManager/ContextComponent"]
 layout_mode = 2
 text = "HEY"
+label_settings = ExtResource("4_m4kly")
 
 [node name="CenterContainer" type="CenterContainer" parent="UIManager"]
 layout_mode = 1
@@ -77,6 +81,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CrosshairTexture" type="TextureRect" parent="UIManager/CenterContainer"]
+visible = false
 layout_mode = 2
 texture = ExtResource("4_jnjyq")
 
@@ -94,6 +99,7 @@ point_label = NodePath("VBoxContainer2/Label")
 VboxContainer2 = NodePath("VBoxContainer2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UIManager/DebugInfo"]
+visible = false
 layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
@@ -103,10 +109,12 @@ offset_bottom = 70.0
 [node name="DebugLabel" type="Label" parent="UIManager/DebugInfo/VBoxContainer"]
 layout_mode = 2
 text = "hello world and things"
+label_settings = ExtResource("4_m4kly")
 
 [node name="Label" type="Label" parent="UIManager/DebugInfo/VBoxContainer"]
 layout_mode = 2
 text = "fhello worldj"
+label_settings = ExtResource("4_m4kly")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="UIManager/DebugInfo"]
 layout_mode = 1
@@ -122,6 +130,7 @@ grow_horizontal = 0
 [node name="Label" type="Label" parent="UIManager/DebugInfo/VBoxContainer2"]
 layout_mode = 2
 text = "Hey There We"
+label_settings = ExtResource("4_m4kly")
 horizontal_alignment = 2
 
 [node name="Automator" type="Node" parent="."]
@@ -134,3 +143,8 @@ collision_mask = 128
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_xkryw")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_ow0dq")
+volume_db = -2.0
+bus = &"FX"

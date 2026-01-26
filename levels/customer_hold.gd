@@ -18,3 +18,6 @@ func move_from_active_to_pool(instance_id: int) -> void:
 	var customer: CustomerAgent = active_pool[instance_id]
 	customer_pool.append(customer)
 	active_pool.erase(instance_id)
+
+func active_pool_empty() -> bool:
+	return active_pool.is_empty()

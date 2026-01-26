@@ -1,14 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://x0y5hj3ms0oh"]
+[gd_scene load_steps=12 format=3 uid="uid://x0y5hj3ms0oh"]
 
 [ext_resource type="Script" uid="uid://ccyrecgdienij" path="res://objects/customer_body/customer_agents.gd" id="1_jhpqa"]
 [ext_resource type="PackedScene" uid="uid://bgav38rriu5uy" path="res://assets/customer.blend" id="2_3gp2y"]
+[ext_resource type="AudioStream" uid="uid://ct1sywv5o0b7r" path="res://assets/audio/sfx/eat.mp3" id="3_kywpk"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_o8n5h"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o8n5h"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jhpqa"]
-radius = 0.7
+radius = 1.0
+height = 2.5
 
 [sub_resource type="Animation" id="Animation_3gp2y"]
 resource_name = "idle"
@@ -118,6 +120,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0.12074188, 0, 0), Vector3(0.018099077, 0, 0), Vector3(0.12074188, 0, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer3D:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.53333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_ec827"]
 length = 0.001
@@ -157,6 +171,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer3D:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ec827"]
 _data = {
@@ -186,7 +212,6 @@ shape = SubResource("CapsuleShape3D_o8n5h")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_height_offset = -1.0
-avoidance_enabled = true
 
 [node name="TableDetection" type="Area3D" parent="."]
 collision_layer = 0
@@ -199,6 +224,10 @@ shape = SubResource("CapsuleShape3D_jhpqa")
 libraries = {
 &"": SubResource("AnimationLibrary_ec827")
 }
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_kywpk")
+volume_db = -2.0
 
 [connection signal="area_entered" from="TableDetection" to="." method="_on_table_detection_area_entered"]
 

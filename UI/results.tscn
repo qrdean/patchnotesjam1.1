@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3 uid="uid://pvuxj3wjyhi"]
+
+[ext_resource type="FontFile" uid="uid://pi6yixnxwj0l" path="res://assets/fonts/WeirdComic-Regular.ttf" id="1_e7vms"]
+[ext_resource type="Script" uid="uid://c5dyqtr0sepuw" path="res://UI/results.gd" id="1_l0itv"]
+[ext_resource type="LabelSettings" uid="uid://cw53bn6vaddyu" path="res://label_settings.tres" id="2_l0itv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u711h"]
+font = ExtResource("1_e7vms")
+font_size = 64
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Results" type="Control" node_paths=PackedStringArray("total_label", "customers_served_label", "customers_left_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l0itv")
+total_label = NodePath("VBoxContainer/Total")
+customers_served_label = NodePath("VBoxContainer/Customers Served")
+customers_left_label = NodePath("VBoxContainer/Customers Left")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 465.0
+offset_top = 170.0
+offset_right = 865.0
+offset_bottom = 570.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.17254902, 0.17254902, 0.17254902, 0.7490196)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -131.5
+offset_top = -71.5
+offset_right = 131.5
+offset_bottom = 71.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Results" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Results"
+label_settings = SubResource("LabelSettings_u711h")
+
+[node name="Total" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Total"
+label_settings = ExtResource("2_l0itv")
+
+[node name="Customers Served" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Customers SERVed"
+label_settings = ExtResource("2_l0itv")
+
+[node name="Customers Left" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Customers left"
+label_settings = ExtResource("2_l0itv")
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Press \"Enter\" To Try Again"
+label_settings = ExtResource("2_l0itv")
