@@ -20,6 +20,8 @@ config/icon="res://icon.svg"
 MessageBus="*res://autoload/MessageBus.gd"
 GameManager="*res://autoload/GameManager.gd"
 PointSystem="*res://autoload/PointSystem.gd"
+MusicPlayer="*res://autoload/MusicPlayer.gd"
+GlobalAudioPlayer="*res://autoload/GlobalAudioPlayer.gd"
 
 [display]
 
