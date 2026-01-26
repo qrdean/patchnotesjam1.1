@@ -73,6 +73,11 @@ func _physics_process(delta: float):
 	var new_velocity = desired_velocity - velocity
 	velocity += new_velocity * delta
 	move_and_slide()
+	
+	if exiting and exit_position != null:
+		set_movement_target(exit_position)
+	elif current_table != null:
+		set_movement_target(current_table.customer_seat.global_position)
 
 
 func _on_table_detection_area_entered(area: Area3D) -> void:

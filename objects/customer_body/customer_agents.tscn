@@ -193,6 +193,7 @@ _data = {
 }
 
 [node name="CustomerAgents" type="CharacterBody3D" node_paths=PackedStringArray("navigation_agent", "table_detection", "animation_player")]
+collision_layer = 0
 motion_mode = 1
 script = ExtResource("1_jhpqa")
 speed = 8.0

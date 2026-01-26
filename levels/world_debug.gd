@@ -11,7 +11,7 @@ extends Node3D
 
 var tables: Array[TableCollider] = []
 var customer_trigger_time := 5.
-var total_customers_to_server := 15
+var total_customers_to_server := 20
 
 var no_more := false
 
